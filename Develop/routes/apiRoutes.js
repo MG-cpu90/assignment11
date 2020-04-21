@@ -4,8 +4,10 @@
 // These data sources hold arrays of information on table-data, waitinglist, etc.
 // ===============================================================================
 
-// const indexJs = require("../public/assets/js/index");
-const dB = require("../db/db.json");
+const notes = require("../db/db.json");
+const fs = require('fs');
+
+// console.log(notes);
 
 // ===============================================================================
 // ROUTING
@@ -18,62 +20,91 @@ module.exports = function(app) {
   // (ex: localhost:PORT/api/admin... they are shown a JSON of the data in the table)
   // ---------------------------------------------------------------------------
 
-//   // Displays all notes
-//   app.get("/api/notes", function(req, res) {
-//     return res.json(notes);
-//   });
+  // Displays all notes
+  app.get("/api/notes", function(req, res) {
+    return res.json(notes);
+  });
   
-//   // Displays a single note, or returns false
-//   app.get("/api/notes/:note", function(req, res) {
-//     var chosen = req.params.note;
+  // Displays a single note, or returns false
+  app.get("/api/notes/:note", function(req, res) {
+    let chosen = req.params.note;
   
-//     console.log(chosen);
+    // console.log(chosen);
+    // console.log(req.params);
   
-//     for (var i = 0; i < notes.length; i++) {
-//       if (chosen === notes[i].routeName) {
-//         return res.json(notes[i]);
-//       }
-//     }
-  
-//     return res.json(false);
-//   });
+    for (var i = 0; i < notes.length; i++) {
+      
+      // Add an ID to the notes
+      if (chosen === notes[i].id) {
+        return res.json(chosen);
+      }
 
-// // Create New Notes - takes in JSON input
-// app.post("/api/notes", function(req, res) {
-//     // req.body hosts is equal to the JSON post sent from the user
-//     // This works because of our body parsing middleware
-//     var newCharacter = req.body;
+      else {
+        return res.json(false);
+      }
+    }
   
-//     // Using a RegEx Pattern to remove spaces from newCharacter
-//     // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-//     newCharacter.routeName = newCharacter.name.replace(/\s+/g, "").toLowerCase();
+  // console.log(notes);
+
+  });
+
+// Create New Notes - takes in JSON input
+app.post("/api/notes", function(req, res) {
+    // req.body hosts is equal to the JSON post sent from the user
+    // This works because of our body parsing middleware
+
+    for (i = 0; i < notes.length; i++) {
+
+    // Add an ID to the new notes  
+    var newNote = 
+      { 
+        title: req.body.title, 
+        text: req.body.text,
+        id: i
+      }
+
+    }
+      
+    // Push the new note to the array of note objects in the original database json file
+    notes.push(newNote);
   
-//     console.log(newCharacter);
-  
-//     // Push the new character to the array of characters in the database, not to the original file
-//     characters.push(newCharacter);
-  
-//     // Show the new character as a JSON objct
-//     res.json(newCharacter);
-//   });
+    // Show the new note as a JSON object
+    res.json(newNote);
 
-// * The application should have a `db.json` file on the backend 
-// that will be used to store and retrieve notes using the `fs` module.
+    // Turn the notes object array into a string
+    let notesString = JSON.stringify(notes);
 
-// * The following API routes should be created:
+    // Write the array of notes/objects to the db.json file
+    fs.writeFile("./db/db.json", notesString, function (err) {
+      if (err) throw err;
+      console.log('Note added!');
+    });
 
-//   * GET `/api/notes` - Should read the `db.json` file and return all saved notes as JSON. db/db.json
+  });
 
-//   * POST `/api/notes` - Should receive a new note to save on the request body, 
-// add it to the `db.json` file, and then return the new note to the client.
+  // Delete a Note
+  app.delete("/api/notes/:id", function(req, res) {
+    //Get the id through req.params.id of the object you are going to delete
+    let chosen = req.params.id;
 
-//   // Displays a single note, or returns false
-//   app.delete("/api/notes/:id", function(req, res) {
-//     var chosen = req.params.note;
+    // As you have only Id of the object, we want to get the entire object from the array. find() will fetch the object from the array whose id is equal to deleteId and assign it to deleteObj.
+    let deleteObj = notes.find(user => user.id == chosen); 
+    //Find the index of the object fetched from the JSON array.
+    let deleteIndex = notes.indexOf(deleteObj); 
+    // Splice/remove the object from the JSON array of notes.
+    notes.splice(deleteIndex,1); 
+    // Send the deleted object as response.
+    res.send(deleteObj); 
 
-//   * DELETE `/api/notes/:id` - Should receive a query parameter containing the id of a note to delete. 
-// This means you'll need to find a way to give each note a unique `id` when it's saved. 
-// In order to delete a note, you'll need to read all notes from the `db.json` file, 
-// remove the note with the given `id` property, and then rewrite the notes to the `db.json` file.
+    // Turn the notes object array into a string
+    let notesString = JSON.stringify(notes);
+
+    // Write the array of notes/objects to the db.json file
+    fs.writeFile("./db/db.json", notesString, function (err) {
+      if (err) throw err;
+      console.log('Note deleted!');
+    });
+
+  });
 
 };
