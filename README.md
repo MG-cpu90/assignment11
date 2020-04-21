@@ -23,7 +23,7 @@ SO THAT I can organize my thoughts and keep track of tasks I need to complete
 ## Deployed Links
 
 * Deployed URLs: 
-    * * https://mg-cpu90.github.io/assignment11/index.html
+    * * https://mg-cpu90.github.io/assignment11/Develop/public/index.html
     * * http://localhost:3000/
 
 * GitHub Repository URL: https://github.com/MG-cpu90/assignment11
