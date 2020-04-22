@@ -22,8 +22,6 @@ SO THAT I can organize my thoughts and keep track of tasks I need to complete
 
 ## Deployed Links
 
-* Deployed URLs: 
-    * * https://mg-cpu90.github.io/assignment11/Develop/public/index.html
-    * * http://localhost:3000/
+* Deployed URLs: https://floating-cliffs-26268.herokuapp.com/
 
 * GitHub Repository URL: https://github.com/MG-cpu90/assignment11
