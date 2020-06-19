@@ -20,7 +20,7 @@ SO THAT I can organize my thoughts and keep track of tasks I need to complete
 
 ## Application Screenshot
 
-![alt text](./public/assets/img/note_taker.png "Thankly Home Page Screen Shot")
+![alt text](./public/assets/img/note_taker.png "Assignment 11 Screen Shot")
 
 ## Accessories Used
 ### Languages
