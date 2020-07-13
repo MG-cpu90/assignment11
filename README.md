@@ -18,6 +18,14 @@ I WANT to be able to delete notes I've written before
 SO THAT I can organize my thoughts and keep track of tasks I need to complete
 
 
+## Usage
+
+* In order to run the following application, first clone the GitHub repository to your local device.
+* Then, open the project root directory in the terminal window, and run "npm install" 
+* After the libraries needed to run the application have been installed, run the "server.js" file through node
+* Navigate to the URL: http://localhost:3000/ in order to view the web application
+
+
 ## Application Screenshot
 
 ![alt text](./public/assets/img/note_taker.png "Assignment 11 Screen Shot")
