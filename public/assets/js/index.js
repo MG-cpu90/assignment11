@@ -113,7 +113,7 @@ var renderNoteList = function(notes) {
     // Create an empty array for the notes
     var noteListItems = [];
 
-
+    // Loop through the notes and generate the following html for each note
     for (var i = 0; i < notes.length; i++) {
         var note = notes[i];
 
